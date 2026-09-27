@@ -16,14 +16,16 @@ The full workflow lives in `NLP_PROJECT.ipynb`: EDA → preprocessing → model 
 
 ## 📊 Results
 
-All three models were trained and evaluated on the same held-out test set.
-*Detailed per-model metrics (accuracy / macro F1) will be added from the evaluation cells in `NLP_PROJECT.ipynb`.*
+All three models were trained and evaluated on the same held-out test set (2,000 samples, 6 emotion classes):
+   Model | Accuracy | Macro F1 | Notes |
+ |---|---|---|---|
+ | FCNN | 0.82 | 0.76 | Baseline with embedding layer |
+ | **Bi-LSTM** | **0.89** | **0.82** | Best overall — best trade-off under limited training budget |
+ | BERT | 0.79 | 0.67 | Fine-tuned `bert-base-uncased`, constrained by training time/epochs |
 
-| Model | Approach |
-|---|---|
-| FCNN | Baseline with embedding layer |
-| Bi-LSTM | Sequential model (bidirectional) |
-| BERT | Fine-tuned `bert-base-uncased` transformer |
+**Key finding:** the Bi-LSTM outperformed fine-tuned BERT under a limited training budget — word-order modeling generalized better than a partially fine-tuned transformer on this dataset size.
+
+Class-level highlights (Bi-LSTM): strong performance on *joy* (0.92) and *sadness* (0.95 F1); *surprise* remains the hardest class across all models (lowest support).
 
 ## 🔧 Tech Stack
 
